@@ -18,6 +18,6 @@ jobs:
           # 你的 PAT 令牌（需添加到 文章仓库的 Secrets 中，命名为 PERSONAL_ACCESS_TOKEN）
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           # 静态博客仓库地址
-          repository: 57Darling02/VitePress_butterfly
+          repository: ${{ secrets.BLOG_REPO }}
           event-type: blog-post-updated
           
