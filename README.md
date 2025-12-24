@@ -17,30 +17,67 @@ author: 57Darling02
 ## 概览
 将静态博客和文章分成两个仓库，一个用于博客仓库通过将文章仓库作为子模块引入文章。博客仓库负责博客网页样式配置等，而文章仓库仅仅用于存放要发布的文章。
 
-##  快速开始（简单部署）
+
+## 法一：快速从零开始搭建一个博客
+
+### 1.获取模板
+分别fork下面两个项目到自己的仓库：
+
+1. [57Darling02/blog-post(github.com)](https://github.com/57Darling02/blog-post)
+2. [57Darling02/VitePress_butterfly(github.com)](https://github.com/57Darling02/VitePress_butterfly)
+
+第一个用于存放文章，可以设为私密
+第二个放网页源码，必须公开，推荐命名为`[你的GITHUB账号.github.io]`
 
 
-### 1.创建一个文章仓库
+### 2.配置变量
 
+##### 创建 GitHub 个人访问令牌（PAT）
 
-### 1. 创建一个文章仓库
+1. 打开 GitHub → 右上角头像 → `Settings` → `Developer settings` → `Personal access tokens` → `Tokens (classic)`；
+2. 点击 `Generate new token (classic)`；
+3. 配置：
+    - `Note`：填 `blog-access`；
+    - `Expiration`：选 `No expiration`（或按需设置）；
+    - `Scopes`：勾选 `repo`（全选 repo 相关权限）；
+4. 点击 `Generate token`，**复制生成的 Token（只显示一次，务必保存）**。
+##### 配置两个仓库的PAT和相关变量
+##### 将 PAT 添加到仓库的 Secrets
 
-点击 GitHub 上的**star**和 **Fork** 按钮，给你的仓库起名（如your-username.github.io），然后克隆到本地：
+1. 仓库 → `Settings` → `Secrets and variables` → `Actions` → `New repository secret`；
+2. `Name`：填 `PERSONAL_ACCESS_TOKEN`；
+3. `Value`：粘贴生成的 PAT；
+4. 点击 `Add secret`。
 
+两个仓库中都添加键值对
+`PERSONAL_ACCESS_TOKEN` 为键，对应值为 生成的PAT
+
+另外，在文章仓库中添加：
+`BLOG_REPO`为键，对应值为 "用户名/源码仓库" 如：
+`[你的GITHUB账号]/[你的GITHUB账号].github.io`
+或者
+`57Darling02/VitePress_butterfly
+
+在源码仓库中添加：
+`POST_REPO`为键，对应值为 "文章仓库链接" 如：
+`https://github.com/57Darling02/blog-post.git`
+
+### 3.修改博客配置
+在源码仓库中找到`site_config.ts`,对博客首页进行自定义配置。
+
+将网站变成你的形状😤修改 site_config.ts进行主题配置信息，更改首页背景图、网站名称、侧边栏个人信息等等。
+### 4.将文章仓库克隆到本地并写作
+
+github进入文章仓库中，将其克隆到本地
+例如：
 ```bash
-git clone https://github.com/your-username/your-username.github.io.git
-cd VitePress_butterfly
+git clone https://github.com/your-username/blog-post.git
+cd blog-post
 ```
 
-### 2. 修改配置
+写出你的第一篇文章
 
-将网站变成你的形状😤修改 site_config.ts进行主题配置信息，更改首页背景图、网站名称、侧边栏个人信息等等。具体配置见下文。
-
-### 3.写一篇文章
-
-在posts/文件夹中创建helloworld.md,内容如下：
-
-```markdown
+```md
 ---
 title: 文章标题
 date: 2024-03-20
@@ -53,103 +90,18 @@ layout: doc # 这行不写也行，涉及到自定义页面才会涉及
 
 ```
 
- **上传到GitHub**
 
-**推荐使用博客管理脚本.sh**
-
-或者手动上传
-
-```
-git add . && git commit -m "update" && git push origin main
-```
-
+写完之后git上传到github即可。
+推荐使用obsidian，可以直接在obsidian中将克隆下来的文章仓库打开，并利用第三方插件git更快速的修改文章。
 > [!WARNING]
-> 使用 -f 强制上传会导致最后更新时间失效。
+>  需要配置obsidian的内部链接类型为 相对位置
 
-### （可选，如果你仅仅使用默认样式，请跳过）预览文章
-
-确保你有nodejs环境后，在命令行完成：
-
-##### 安装依赖
-
-```cmd
-npm install
-```
-
-##### 打包
-
-```
-npm run docs:build
-```
-
-##### 预览
-```
-npm run preview
-```
-
-
-
-### 4.部署（二选一）
-
-##### 工作流（推荐）
-
-如果你是直接复刻仓库，那么完全不需要，我已经帮给你写好了。如果你非要自己搞，请参考vitepress官方文档。工作流将会在你push文件时触发，仓库上方点击actions查看部署进度。
-
-这种方式能够：
-
-- 只需要写文章，push内容。github page自动构建后救恩那个在你的网站看到更新的内容
-
-##### 本地构建
-
-> 该方式需要你手动打包，并让github部署,类似hexo
-
-1. 构建生产版本
-
-```bash
-npm run build
-```
->  注意：这里build将打包到最外边docs文件夹中
-
-2. 上传到github
-
-3. 配置GitHub Page，选择docs
-
-![1741082221235](https://resource-un4.pages.dev/article/1741082221235.png)
-
-4. 后续每次修改配置和文章，都要打包构建并上传到github
 
 ## 主题更新
 
-主题更新前，请先完成一次上传到github，确保回到github云端的最新仓库能够避免损失。
+在源码仓库中点击更新上游即可，注意保存配置文件`site_config.ts`
 
-#### 直接更新（小白用）：通过 博客管理脚本.sh 完成
-
-请移步最新仓库获得这份脚本。
-
-```
-git fetch upstream
-git checkout upstream/main -- 博客管理脚本.sh
-git add 博客管理脚本.sh
-```
-
-
-
-> [!WARNING]
-> 这将仅保留 "posts/" "site_config.ts"  "public/"  ".github/"，其余文件将被覆盖。如果只修改了以上文件，简单更新即可。如果不小心出现覆盖，请使用git reset --hard origin/main 回到当前已经部署再网页上的状态。
-
-
-> [!IMPORTANT]
-> 注意，主题更新后，请查看.vitepress目录中的模板site_config_template.ts与你的配置文件区别，完成配置。
-
-更新的文件会拉到本地，请确认无误后，上传至你的github仓库触发更新.
-
-#### 手动更新，同步仓库并合并冲突
-
-## 配置指南
-
-修改根目录下的 site_config.ts进行主题配置：内容可参考.vitepress目录中的模板site_config_template.ts。[VitePress_butterfly/.vitepress/site_config_template.ts](https://github.com/57Darling02/VitePress_butterfly/blob/main/.vitepress/site_config_template.ts)可将其重命名复制到根目录下的 site_config.ts。
-
-> 注意，修改模板没什么效果，还可能导致你更新主题时面临合并问题。
+不定期修bug或更新新功能。
 
 ### 目录结构
 
@@ -162,13 +114,11 @@ Blog/                   # 项目根目录
 │   ├── index.js
 │   └── ...   
 ├── site_config.ts     # 站点配置 自定义的配置，主要修改这个文件来配置站点信息
-├── posts/             # Markdown文章 文章放这里
+├── posts/             # Markdown文章
 ├── public/            # 静态资源 例如背景图片，例如 public/a.png 则配置中对应 /a.png
 └── package.json       # 依赖配置 (一般不用动)
 ```
 ### 文章规范
-
-图片使用相对路径即可。建议使用typra编辑器，可以方便的插入相对路径图片
 
 ```markdown
 ---
