@@ -21,12 +21,11 @@ author: 57Darling02
 ## 法一：快速从零开始搭建一个博客
 
 ### 1.获取模板
-分别将下面两个模板项目到自己的仓库：
+分别将下面两个模板项目fork到自己的仓库：
 
 1. [57Darling02/blog-post(github.com)](https://github.com/57Darling02/blog-post)
 2. [57Darling02/VitePress_butterfly(github.com)](https://github.com/57Darling02/VitePress_butterfly)
 
-![[附件/Pasted image 20251225014254.png]]
 
 第一个用于存放文章，可以设为私密
 第二个放网页源码，必须公开，推荐命名为`[你的GITHUB账号.github.io]`
