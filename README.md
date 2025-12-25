@@ -64,9 +64,12 @@ author: 57Darling02
 `https://github.com/57Darling02/blog-post.git`
 
 ### 3.修改博客配置
-在源码仓库中找到`site_config.ts`,对博客首页进行自定义配置。
+在源码仓库中找到`site_config.ts`,copy一份到你的文章仓库，在修改`site_config.ts`对博客首页进行自定义配置。
+> 文章仓库的`site_config.ts`会优先起作用
 
 将网站变成你的形状😤修改 site_config.ts进行主题配置信息，更改首页背景图、网站名称、侧边栏个人信息等等。
+
+
 
 github page中改变部署来源为 action
 ![[附件/Pasted image 20251225014512.png]]
@@ -133,18 +136,29 @@ layout: doc # 这行不写也行，涉及到自定义页面才会涉及
 如果要部署的网页不止一个，那么你的github page就无法将不同的页面映射到不同的域名上。此时需要借助vercel部署。
 
 模板的workflow中还有一个`vercel.yml`，还需要额外配置三个参数。
+`VERCEL_ORG_ID` `VERCEL_PROJECT_ID` `VERCEL_TOKEN`
+
 ![[附件/Pasted image 20251225111143.png]]
-网上有别人写的教程，在此不再重复：
-[使用 GitHub Actions 自动部署 Vercel 教程 | 变量人生 (bianliangrensheng.cn)](https://www.bianliangrensheng.cn/blog/github-actions-auto-vercel)
-
-
-
-自此
+[Two Ways to Find Vercel ORG_ID and PROJECT_ID (codenote.net)](https://codenote.net/en/posts/how-to-find-vercel-org-project-ids/)
+简单来说：
+1. 在vercel中配置token
+2. 关联github仓库
+3. 获取`Project ID` 和`Team ID`
+	并将它们分别配置为`VERCEL_TOKEN` `VERCEL_TOKEN`和`VERCEL_ORG_ID`
 ## 主题更新
 
-在源码仓库中点击更新上游即可，注意保存配置文件`site_config.ts`
+在源码仓库中点击更新上游即可
 
-不定期修bug或更新新功能。
+
+或者使用命令行，打开源码仓库终端执行
+
+```bash
+git remote add upstream https://github.com/57Darling02/VitePress_butterfly.git
+
+git fetch upstream
+git checkout main
+git reset --hard upstream/main
+```
 
 
 ### 目录结构
