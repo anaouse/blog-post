@@ -4,8 +4,6 @@ name: Trigger Main Blog Repo Build
 on:
   push:
     branches: [main]
-    paths:
-      - '**.md'  # 只在文章文件更新时触发，避免无关提交触发构建
 
 jobs:
   trigger:
