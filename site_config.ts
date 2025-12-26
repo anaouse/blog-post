@@ -2,10 +2,10 @@ import ThemeConfig  from "./.vitepress/theme/ts/ThemeConfig";
 // 使用typescript类型检查
 const config: ThemeConfig = {
   // VitePress 站点基本配置
-  site_name: "My Awesome Site",
+  site_name: "M111111 TESTt ",
   site_description: "这是一个使用 VitePress 构建的文档站点。",
   site_url: "/",
-  author: '57Darling02',
+  author: 'AN',
   defaultFocusMode: false, // 是否默认开启焦点模式
   isDark: null, // 是否默认开启深色模式, null 则会跟随系统
 
